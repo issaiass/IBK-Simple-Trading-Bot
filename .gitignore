@@ -1,0 +1,44 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Test and tool caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Bot secrets and runtime state
+.env
+.env.*
+!.env.example
+trades.csv
+logs/
+*.log
+*.tmp
+trade.log
+open_positions.json
+safety-check-log.json
+watchlist.txt
+schedule_state.json
+schedule_crontab.backup
+
+# browser-test tool output
+.playwright-mcp/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Claude Code local settings
+.claude/

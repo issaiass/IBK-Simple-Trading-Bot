@@ -1,0 +1,15 @@
+sequenceDiagram
+    participant S as Scheduler
+    participant C as cycle
+    participant T as TWS (paper)
+    participant F as Files
+    participant D as Dashboard
+    loop every 5 min in market hours
+        S->>C: run
+        C->>T: positions, prices
+        C->>C: manage stops, partials, 15:51 close
+        C->>C: scan watchlist (D1-D3, I1-I3)
+        C->>T: place order + stop
+        C->>F: trades.csv, positions, decision log
+    end
+    D->>F: read through serve-api every 30 s

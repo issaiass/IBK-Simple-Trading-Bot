@@ -1,0 +1,54 @@
+[project]
+name = "trading-bot"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.14"
+dependencies = [
+    "ib-async>=2.1.0",
+    "python-dotenv>=1.2.4",
+    "requests>=2.34.2",
+    "starlette>=1.7.0",
+    "tzdata>=2025.3",
+    "uvicorn>=0.54.0",
+    "yfinance>=1.7.0",
+]
+
+[dependency-groups]
+dev = [
+    "httpx2>=2.13.1",
+    "pytest>=9.1.1",
+]
+
+[build-system]
+requires = ["uv_build>=0.7.14,<0.8"]
+build-backend = "uv_build"
+
+[project.scripts]
+trading-bot = "trading_bot.bot:main"
+trade = "trading_bot.trade:main"
+close-position = "trading_bot.close:main"
+scan = "trading_bot.scanner.cli:main"
+prefilter = "trading_bot.scanner.prefilter:main"
+cycle = "trading_bot.cycle.cli:main"
+perf = "trading_bot.reporting.performance:main"
+rotate-logs = "trading_bot.maintenance.rotation:main"
+refresh-sp500 = "trading_bot.maintenance.sp500_refresh:main"
+doctor = "trading_bot.doctor.cli:main"
+setup-schedule = "trading_bot.scheduling.setup:main"
+cleanup-schedule = "trading_bot.scheduling.cleanup:main"
+serve-api = "trading_bot.api.server:main"
+schedule-status = "trading_bot.scheduling.toggle:status_main"
+disable-schedule = "trading_bot.scheduling.toggle:disable_main"
+enable-schedule = "trading_bot.scheduling.toggle:enable_main"
+buy-one = "trading_bot.cli.buy_one:main"
+close-one = "trading_bot.cli.close_one:main"
+buy-stop = "trading_bot.cli.buy_with_stop:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-m 'not live'"
+markers = [
+    "live: places real orders, needs TWS running on port 7497",
+    "live_notify: sends real Telegram messages (opts out of the notification guard)",
+]
+

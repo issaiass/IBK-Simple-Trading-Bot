@@ -1,0 +1,17 @@
+flowchart TB
+    YF[("yfinance<br/>screening data")] --> PRE["prefilter<br/>7 runs each morning"]
+    PRE --> WL[/"watchlist.txt"/]
+    WL --> CYC["cycle<br/>every 5 minutes"]
+    RULES[/"config/rules.json"/] --> CYC
+    CYC <--> TWS["TWS / IB Gateway<br/>paper account, port 7497"]
+    CYC --> STATE[/"trades.csv<br/>open_positions.json<br/>safety-check-log.json"/]
+    STATE --> EOD["perf + rotate-logs<br/>end of day"]
+    EOD --> TG["Telegram"]
+    CYC -.-> TG
+    STATE --> API["serve-api<br/>read-only, port 8000"]
+    API --> UI["Dashboard<br/>web :3000 or desktop .exe"]
+    SCHED{{"Scheduler<br/>Task Scheduler, cron or launchd"}} -.->|starts| PRE
+    SCHED -.->|starts| CYC
+    SCHED -.->|starts| EOD
+    DOC["doctor<br/>health check"] -.-> TWS
+    DOC -.-> SCHED
